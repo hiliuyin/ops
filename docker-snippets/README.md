@@ -1,6 +1,6 @@
 # docker-snippets
 
-## How to verify the status and the health of the Docker Daemon
+### How to verify the status and the health of the Docker Daemon
 #### sudo service docker status
 ```
 ubuntu@iZk1a3fdjhn44xmmyyyhp8Z:~$ service docker status
@@ -39,23 +39,22 @@ ubuntu@iZk1a3fdjhn44xmmyyyhp8Z:~$ systemctl status docker
 Warning: Journal has been rotated since unit was started. Log output is incomplete or unavailable.
 ```
 
-## Where is the Docker Daemon log?
+### Where is the Docker Daemon log?
 ```
-Ubuntu (old using upstart) - /var/log/upstart/docker.log
+Ubuntu (old using upstart)              - /var/log/upstart/docker.log
 Ubuntu (new using systemd, from 15.04+) - sudo journalctl -fu docker.service
-Boot2Docker - /var/log/docker.log
-Debian GNU/Linux - /var/log/daemon.log
-CentOS - /var/log/daemon.log | grep docker
-CoreOS - journalctl -u docker.service
-Fedora - journalctl -u docker.service
-Red Hat Enterprise Linux Server - /var/log/messages | grep docker
-OpenSuSE - journalctl -u docker.service
-OSX - ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/log/docker.log
-Windows - Get-EventLog -LogName Application -Source Docker -After (Get-Date).AddMinutes(-5) | Sort-Object Time
+Boot2Docker                             - /var/log/docker.log
+Debian GNU/Linux                        - /var/log/daemon.log
+CentOS                                  - /var/log/daemon.log | grep docker
+CoreOS                                  - journalctl -u docker.service
+Fedora                                  - journalctl -u docker.service
+Red Hat Enterprise Linux Server         - /var/log/messages | grep docker
+OpenSuSE                                - journalctl -u docker.service
+OSX                                     - ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/log/docker.log
+Windows                                 - Get-EventLog -LogName Application -Source Docker -After (Get-Date).AddMinutes(-5) | Sort-Object Time
 ```
-
-## Devicemapper
-### Error starting daemon with "devicemapper: Can't set cookie dm_task_set_cookie failed"
+ 
+### Devicemapper: Error starting daemon with "devicemapper: Can't set cookie dm_task_set_cookie failed"
 Start daemon with the following error:
 ```
 level=error msg="[graphdriver] prior storage driver devicemapper failed: devicemapper: Can't set cookie dm_task_set_cookie failed
@@ -88,4 +87,8 @@ Refer the following links to solve this issue:
 https://help.replicated.com/community/t/error-message-can-not-set-cookie-dm-set-cookie-failed/54/1
 
 https://github.com/docker/for-linux/issues/85
+
+### How to enable DEBUG log level for docker daemon?
+Add ```{"debug": true}``` into ```/etc/docker/daemon.json```
+
 
