@@ -1,5 +1,38 @@
 # docker-snippets
 
+### docker configuration
+- Docker Upstart and SysVinit configuration file, does not apply to SystemD
+```/etc/default/docker```
+- SystemD
+```/etc/docker/daemon.json```
+
+### container log configuration
+- Upstart and SysVinit
+Use DOCKER_OPTS to modify the daemon startup options.
+```DOCKER_OPTS="--log-driver=json-file --log-opt max-file=1 --log-opt max-size=1024m"```
+- SystemD
+Add into ```/etc/docker/daemon.json```
+```
+{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m"
+    "max-file": 3
+  }
+}
+```
+
+### Reload configuration
+Send a HUP signal to the daemon to cause it to reload its configuration.
+```sudo kill -SIGHUP $(pidof dockerd)```
+
+### Force a stack trace to be logged
+If the daemon is unresponsive, you can force a full stack trace to be logged by sending a SIGUSR1 signal to the daemon.
+```sudo kill -SIGUSR1 $(pidof dockerd)```
+
+### How to enable DEBUG log level for docker daemon?
+Add ```{"debug": true}``` into ```/etc/docker/daemon.json```
+
 ### How to verify the status and the health of the Docker Daemon
 #### sudo service docker status
 ```
@@ -88,7 +121,7 @@ https://help.replicated.com/community/t/error-message-can-not-set-cookie-dm-set-
 
 https://github.com/docker/for-linux/issues/85
 
-### How to enable DEBUG log level for docker daemon?
-Add ```{"debug": true}``` into ```/etc/docker/daemon.json```
+
+
 
 
